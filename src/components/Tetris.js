@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { createStage, checkCollision } from '../gameHelpers';
 
-// Styled Components
 import { StyledTetris, StyledTetrisWrapper } from './styles/StyledTetris';
 
-// Custom Hooks
 import { usePlayer } from '../hooks/usePlayer';
 import { useStage } from '../hooks/useStage';
+import { useInterval } from '../hooks/useInterval';
 
-// Components
 import Stage from './Stage';
 import Display from './Display';
 import StartButton from './StartButton'
@@ -29,9 +27,9 @@ const Tetris = () => {
     }
 
     const startGame = () => {
-        console.log('test');
         // Reset everything
         setStage(createStage());
+        setDropTime(1000);
         resetPlayer();
         setGameOver(false);
     }
@@ -68,6 +66,10 @@ const Tetris = () => {
             }
         }
     }
+
+    useInterval(() => {
+        drop();
+    }, dropTime);
 
     return (
         <StyledTetrisWrapper
